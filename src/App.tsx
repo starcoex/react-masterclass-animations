@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 const Wapper = styled.div`
@@ -10,14 +10,24 @@ const Wapper = styled.div`
   height: 100vh;
   background-color: blue;
 `;
+const BiggerBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: yellow;
+  width: 600px;
+  height: 600px;
+  /* overflow: hidden; */
+`;
 const Box = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 200px;
   height: 200px;
   /* border:1px solid black; */
-  border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  background-color: white;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 const Circle = styled(motion.div)`
@@ -31,82 +41,34 @@ const Circle = styled(motion.div)`
   background-color: white;
 `;
 const boxVariants = {
-  visible: {
-    // opacity: 0,
-    // scale: 0.5,
-    opacity: 0,
-    scale: 0.5,
+  hover: {
+    scale: 2,
+    rotateZ: 120,
   },
-  invisible: {
-    // opacity: 1,
-    // scale: 1,
-    // transition: {
-    //   type: 'spring',
-    //   duration: 0.5,
-    //   bounce: 0.5,
-    //   delayChildren: 0.5,
-    //   staggerChildren: 0.5,
-    scale: 1,
-    opacity: 1,
-    transition: {
-      type: 'spring',
-      duration: 0.5,
-      bounce: 0.5,
-      delayChildren: 0.5,
-      staggerChildren: 0.2,
-    },
-  },
-};
 
-const cirCleVariants = {
-  visible: {
-    opacity: 0,
-    y: 10,
-    // scale: 0,
-    // y: 0,
-  },
-  invisible: {
-    opacity: 1,
-    y: 0,
-    // y: 10,
-    // transition: {
-    //   delay: 0.5,
-    // },
-    // scale: 1,
-    // rotateZ: 360,
-    // transition: { type: 'spring', bounce: 0.8, duration: 5 },
+  click: {
+    scale: 1,
+    borderRadius: '50%',
   },
 };
 
 function App() {
+  const biggerBoxRef = useRef<HTMLDivElement>(null);
+  console.log(biggerBoxRef);
   return (
     <Wapper>
       <Helmet>
         <title>ANIMATIONS</title>
       </Helmet>
-      <Box variants={boxVariants} initial='visible' animate='invisible'>
-        <Circle
-          variants={cirCleVariants}
-          // initial='visible'
-          // animate='invisible'
-        />
-        <Circle
-          variants={cirCleVariants}
-          // initial='visible'
-          // animate='invisible'
-        />
-
-        <Circle
-          variants={cirCleVariants}
-          // initial='visible'
-          // animate='invisible'
-        />
-        <Circle
-          variants={cirCleVariants}
-          // initial='visible'
-          // animate='invisible'
-        />
-      </Box>
+      <BiggerBox ref={biggerBoxRef}>
+        <Box
+          drag
+          // dragSnapToOrigin
+          dragConstraints={biggerBoxRef}
+          variants={boxVariants}
+          whileHover='hover'
+          whileTap='click'></Box>
+      </BiggerBox>
     </Wapper>
   );
 }
