@@ -1,13 +1,13 @@
-import { motion } from 'framer-motion';
-import React, { useRef } from 'react';
+import { motion, useMotionValue, useScroll, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-const Wapper = styled.div`
+const Wapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 200vh;
   background-color: blue;
 `;
 const BiggerBox = styled.div`
@@ -53,22 +53,28 @@ const boxVariants = {
 };
 
 function App() {
-  const biggerBoxRef = useRef<HTMLDivElement>(null);
-  console.log(biggerBoxRef);
+  const x = useMotionValue(0);
+  const scale = useTransform(x, [-600, 0, 600], [2, 1, 0.1]);
+  const { scrollY, scrollYProgress } = useScroll()
+  const scrollScale = useTransform(scrollYProgress, [0, 1], [1, 3])
+  const backgroudColor1 = useTransform(
+    x,
+    [-600, 0, 600],
+    [
+      "#12e091",
+      "#10e091",
+      "#12e001",
+    ]
+  );
+  useEffect(() => {
+    x.onChange(() => console.log(scale.get()));
+  }, [x]);
   return (
-    <Wapper>
+    <Wapper style={{ backgroundColor: backgroudColor1 }}>
       <Helmet>
         <title>ANIMATIONS</title>
       </Helmet>
-      <BiggerBox ref={biggerBoxRef}>
-        <Box
-          drag
-          // dragSnapToOrigin
-          dragConstraints={biggerBoxRef}
-          variants={boxVariants}
-          whileHover='hover'
-          whileTap='click'></Box>
-      </BiggerBox>
+      <Box drag='x' dragSnapToOrigin style={{ x: x, scale: scrollScale, backgroundColor: backgroudColor1 }}></Box>
     </Wapper>
   );
 }
