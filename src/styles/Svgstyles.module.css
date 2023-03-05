@@ -1,0 +1,36 @@
+.cls_1 {
+  fill: none;
+}
+
+.cls_2 {
+  fill: #f8b62d;
+}
+
+.cls_3,
+.cls_4 {
+  fill: #fabe00;
+}
+
+.cls_5 {
+  fill: #fff;
+  display: none;
+}
+
+.cls_6,
+.cls_7 {
+  fill: #e83828;
+}
+
+.cls_7,
+.cls_4 {
+  mix-blend-mode: multiply;
+}
+
+.cls_8 {
+  isolation: isolate;
+}
+
+.cls_9 {
+  fill: #980014;
+  opacity: 0.4;
+}

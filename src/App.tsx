@@ -2,6 +2,9 @@ import { motion, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
+import styles from "./styles/Styles.module.css"
+import SvgStar from './components/Svgstar';
+
 const Wapper = styled(motion.div)`
   display: flex;
   justify-content: center;
@@ -66,15 +69,14 @@ function App() {
       "#12e001",
     ]
   );
-  useEffect(() => {
-    x.onChange(() => console.log(scale.get()));
-  }, [x]);
+
   return (
     <Wapper style={{ backgroundColor: backgroudColor1 }}>
       <Helmet>
-        <title>ANIMATIONS</title>
+        <title >ANIMATIONS</title>
       </Helmet>
-      <Box drag='x' dragSnapToOrigin style={{ x: x, scale: scrollScale, backgroundColor: backgroudColor1 }}></Box>
+      <SvgStar />
+
     </Wapper>
   );
 }
